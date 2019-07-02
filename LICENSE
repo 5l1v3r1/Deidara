@@ -173,6 +173,11 @@
       incurred by, or claims asserted against, such Contributor by reason
       of your accepting any such warranty or additional liability.
 
+   10. Solemnly declare: This project is mainly for the safety testing 
+   behavior of legally authorized enterprises or units. No one may use 
+   it for illegal purposes, otherwise the consequences will bear the 
+   responsibility and will be held accountable!
+
    END OF TERMS AND CONDITIONS
 
    APPENDIX: How to apply the Apache License to your work.
@@ -186,7 +191,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [yyyy] [name of copyright owner]
+   Copyright 2019 R4v3zn
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
