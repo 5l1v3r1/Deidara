@@ -28,35 +28,83 @@
       </div>
     </main>
   </div>
--->
+--><div>
   <el-container>
     <el-main>
       <div>
-        <el-form :inline="true">
+        <el-form label-position="right" size="mini" :inline="true">
           <el-form-item label-width="60px" label="目标：" >
-            <el-input size="small" id="target" type="text"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button size="small">导入目标</el-button>
+            <el-input size="mini" id="target" type="text" style="width:150px"></el-input>
+            <el-button size="mini">导入目标</el-button>
           </el-form-item>
           <el-form-item label-width="60px" label="并发：">
-            <el-input-number size="small"></el-input-number>
+              <el-input-number v-model="concurrent" size="mini"></el-input-number>
+          </el-form-item>
+          <el-form-item label-width="60px" label="超时：">
+              <el-input-number v-model="time_out" size="mini"></el-input-number>
+          </el-form-item>
+          <el-form-item label-width="60px" label="重试：">
+              <el-input-number v-model="retry" size="mini"></el-input-number>
+          </el-form-item>
+        </el-form>
+        <el-form :inline="true" label-position="right" size="mini">
+          <el-form-item label-width="60px" label="用户：" >
+            <el-input size="mini" id="target" type="text"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="mini">导入用户</el-button>
+          </el-form-item>
+          <el-form-item label-width="60px" label="密码：" >
+            <el-input size="mini" id="target" type="text"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="mini">导入密码</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="mini">开始检测</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="mini">终止检测</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button size="mini">设置中心</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div>
-      </div>
-    </el-main>
-    <el-aside>
-      <el-form style="margin-right:25px">
-        <el-form-item label="Console Logs">
-          <el-input type="textarea"
-          :autosize="{ minRows: 2, maxRows: 500}"
+       <el-table
+          :data="tableData"
+          border
+          style="width: 100%; height: 100%;">
+        <el-table-column
+          prop="date"
+          label="日期"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="姓名"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          label="地址">
+        </el-table-column>
+        </el-table>
+    </div>
+  </el-main>
+  <el-aside>
+    <el-form style="margin-right:25px">
+      <el-form-item label="Console Logs">
+        <el-input type="textarea"
+          v-model="logs"
+          :autosize="{ minRows: 24, maxRows: 500}"
           ></el-input>
         </el-form-item>
       </el-form>
     </el-aside>
   </el-container>
+  </div>
 </template>
 
 <script>
@@ -65,6 +113,19 @@
   export default {
     name: 'landing-page',
     components: { SystemInformation },
+    data:function() {
+      return {
+        logs: '',
+        concurrent: 10,
+        time_out: 10,
+        retry: 0,
+        tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }]
+      }
+    },
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
