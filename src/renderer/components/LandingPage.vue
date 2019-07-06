@@ -1,34 +1,4 @@
 <template>
-<!--
-  <div id="wrapper">
-    <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
-    <main>
-      <div class="left-side">
-        <span class="title">
-          Welcome to your new project!
-        </span>
-        <system-information></system-information>
-      </div>
-
-      <div class="right-side">
-        <div class="doc">
-          <div class="title">Getting Started</div>
-          <p>
-            electron-vue comes packed with detailed documentation that covers everything from
-            internal configurations, using the project structure, building your application,
-            and so much more.
-          </p>
-          <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button><br><br>
-        </div>
-        <div class="doc">
-          <div class="title alt">Other Documentation</div>
-          <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-          <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
-        </div>
-      </div>
-    </main>
-  </div>
---><div>
   <el-container>
     <el-main>
       <div>
@@ -49,9 +19,7 @@
         </el-form>
         <el-form :inline="true" label-position="right" size="mini">
           <el-form-item label-width="60px" label="用户：" >
-            <el-input size="mini" id="target" type="text"></el-input>
-          </el-form-item>
-          <el-form-item>
+            <el-input size="mini" id="target" type="text" style="width:150px"></el-input>
             <el-button size="mini">导入用户</el-button>
           </el-form-item>
           <el-form-item label-width="60px" label="密码：" >
@@ -75,22 +43,52 @@
        <el-table
           :data="tableData"
           border
-          style="width: 100%; height: 100%;">
-        <el-table-column
-          prop="date"
-          label="日期"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="姓名"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址">
-        </el-table-column>
+          style="width: 100%; height: 100%;"
+          size="mini">
+          <el-table-column type="index" label="ID" align="center" width="50px"></el-table-column>
+          <el-table-column prop="host" label="HOST" align="center" width="120px">
+            <template slot-scope="scope">
+              <el-tag size="mini">{{ scope.row.host }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="type" label="数据库类型" filter-placement="bottom-end" width="120px">
+            <template slot-scope="scope">
+              <el-tag size="mini">{{ scope.row.type }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="version" label="版本号" align="center" width="120px">
+            <template slot-scope="scope">
+              <el-tag size="mini">{{ scope.row.version }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="version" label="用户名" align="center" width="120px">
+            <template slot-scope="scope">
+              <el-tag size="mini">{{ scope.row.user_name }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="version" label="密码" align="center" width="120px">
+            <template slot-scope="scope">
+              <el-tag size="mini">{{ scope.row.password }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" align="center">
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                @click="handleEdit(scope.$index, scope.row)" type="primary">连接</el-button>
+              <el-button
+                size="mini"
+                @click="handleDelete(scope.$index, scope.row)" type="primary">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table>
+        <el-pagination
+          @size-change="handleSizeChange1"
+          @current-change="handleCurrentChange1" :current-page="current_page"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="page_size" layout="total, sizes, prev, pager, next, jumper"
+          :total="tableData.length">
+          </el-pagination>
     </div>
   </el-main>
   <el-aside>
@@ -104,12 +102,9 @@
       </el-form>
     </el-aside>
   </el-container>
-  </div>
 </template>
-
 <script>
   import SystemInformation from './LandingPage/SystemInformation'
-
   export default {
     name: 'landing-page',
     components: { SystemInformation },
@@ -119,103 +114,304 @@
         concurrent: 10,
         time_out: 10,
         retry: 0,
+        current_page: 1,
+        page_size: 10,
         tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
+        },{
+          host: '127.0.0.1:3306',
+          type: 'MySQL',
+          version: '5.7',
+          user_name: 'root',
+          password: '123456'
         }]
       }
     },
     methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
+       handleSizeChange1: function(page_size) { // 每页条数切换
+        this.page_size = page_size
+        this.handleCurrentChange1(this.current_page);
+    },
+    handleCurrentChange1: function(current_page) {//页码切换
+        this.current_page = current_page
+        this.currentChangePage(this.tableData,current_page) 
+    },
+    //分页方法（重点）
+   currentChangePage(list,current_page) { 
+      let from = (current_page - 1) * this.page_size;
+      let to = current_page * this.page_size;
+      this.tempList = [];
+      for (; from < to; from++) {
+        if (list[from]) {
+          this.tempList.push(list[from]);
+        }
       }
+    },
     }
   }
 </script>
-
 <style>
-/*
-  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  body { font-family: 'Source Sans Pro', sans-serif; }
-
-  #wrapper {
-    background:
-      radial-gradient(
-        ellipse at top left,
-        rgba(255, 255, 255, 1) 40%,
-        rgba(229, 229, 229, .9) 100%
-      );
-    height: 100vh;
-    padding: 60px 80px;
-    width: 100vw;
-  }
-
-  #logo {
-    height: auto;
-    margin-bottom: 20px;
-    width: 420px;
-  }
-
-  main {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  main > div { flex-basis: 50%; }
-
-  .left-side {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .welcome {
-    color: #555;
-    font-size: 23px;
-    margin-bottom: 10px;
-  }
-
-  .title {
-    color: #2c3e50;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 6px;
-  }
-
-  .title.alt {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-
-  .doc p {
-    color: black;
-    margin-bottom: 10px;
-  }
-
-  .doc button {
-    font-size: .8em;
-    cursor: pointer;
-    outline: none;
-    padding: 0.75em 2em;
-    border-radius: 2em;
-    display: inline-block;
-    color: #fff;
-    background-color: #4fc08d;
-    transition: all 0.15s ease;
-    box-sizing: border-box;
-    border: 1px solid #4fc08d;
-  }
-
-  .doc button.alt {
-    color: #42b983;
-    background-color: transparent;
-  }
-  */
 </style>

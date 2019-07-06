@@ -1,0 +1,4 @@
+boom:
+  concurrent: 10
+  retry: 0
+  time_out: 10

@@ -14,5 +14,10 @@ export default new Router({
       path: '*',
       redirect: '/'
     }
+    /*,{
+      path: '/get_db',
+      name: 'get_dbs',
+      component: s
+    }*/
   ]
 })
